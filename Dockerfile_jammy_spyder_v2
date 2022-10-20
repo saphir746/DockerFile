@@ -1,0 +1,44 @@
+FROM ubuntu:jammy
+
+RUN    apt-get -y update
+RUN    apt-get -y upgrade
+RUN    apt-get install --yes apt-utils
+ARG  DEBIAN_FRONTEND=noninteractive
+ENV  TZ=Europe/London
+RUN    apt-get install --yes tzdata
+
+##RUN    apt install python3.9
+
+RUN    apt-get -y install python3-numpy \
+                          python3-scipy \
+                          python3-matplotlib \
+#                          ipython3 \
+#                          ipython3-notebook \
+                          python3-pandas \
+                          python3-sympy \
+                          python3-nose
+
+#RUN    apt-get -y install libjs-jquery \
+#                          libjs-mathjax \
+#                          python3-pyqt4 \
+#                          tortoisehg \
+#                          gitk \
+#                          ipython3-qtconsole \
+#                          python3-pep8 \
+#                          pyflakes \
+#                          pylint \
+#                          python3-jedi \
+#                          python3-psutil \
+#                          python3-sphinx
+
+RUN    apt-get update && apt-get install -y spyder
+RUN    apt-get -y install python3-pip
+RUN    pip3 install regex
+
+RUN apt-get install -y python4-sklearn python3-sklearn-lib python3-sklearn-pandas
+
+RUN    apt-get clean \
+    && apt-get purge
+
+## cleanup of files from setup
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
