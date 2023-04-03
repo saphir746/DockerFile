@@ -1,0 +1,25 @@
+FROM saphir746/jupyverse:v2
+
+RUN apt-get install --yes python3-pip
+RUN pip install upsetplot
+RUN pip install umap-learn
+RUN pip install louvain
+RUN pip install leidenalg
+RUN pip install anndata
+RUN pip install scanpy
+RUN pip install scvi-tools
+RUN pip install jupyter-book
+RUN pip install scrublet
+
+RUN pip install harmonypy
+#RUN pip install git+https://github.com/yoseflab/destvi_utils.git
+
+RUN pip install pymde
+RUN pip install scikit-misc
+
+#RUN apt-get update && apt-get install --yes nvidia-driver-470 nvidia-dkms-470
+
+RUN pip install torch torchvision torchaudio
+RUN pip install jax jaxlib
+
+RUN pip install scvi-colab
