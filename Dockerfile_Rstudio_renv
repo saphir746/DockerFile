@@ -1,0 +1,54 @@
+FROM ubuntu:22.04
+
+RUN apt-get update
+RUN apt-get --yes upgrade
+RUN apt-get install --yes apt-utils
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/London
+RUN apt-get install --yes tzdata
+
+RUN apt-get install --yes less
+
+RUN apt-get -y install r-base \
+           wget \
+           r-base-dev \
+           r-recommended \
+           littler \
+           r-cran-littler \
+           libxml2-dev \
+           libxt-dev \
+           libssl-dev \
+           libcurl4-openssl-dev
+           
+RUN    apt-get -y install gdebi-core
+RUN    wget https://download1.rstudio.org/desktop/jammy/amd64/rstudio-2022.07.1-554-amd64.deb
+RUN    gdebi rstudio-2022.07.1-554-amd64.deb
+
+RUN     rm *amd64.deb && \
+        rm -rf /var/lib/apt/lists/*
+
+RUN apt install libnss3 \
+            libasound2
+            
+#### update system libraries
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean
+        
+## Set up RENV
+
+ENV RENV_VERSION 0.17.3
+RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
+RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
+ENV RENV_PATHS_LIBRARY renv/library
+
+###
+## RUN   R -e "install.packages('BiocManager')"
+
+RUN    apt-get clean \
+    && apt-get purge
+
+## cleanup of files from setup
+
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
