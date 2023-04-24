@@ -9,9 +9,15 @@ ENV TZ=Europe/London
 RUN apt-get install --yes tzdata
 
 RUN apt-get install --yes less
+RUN apt-get install -y wget
+
+### get correct mirrors for R v4.2
+
+RUN apt install -y --no-install-recommends software-properties-common dirmngr
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
 
 RUN apt-get -y install r-base \
-           wget \
            r-base-dev \
            r-recommended \
            littler \
@@ -20,7 +26,7 @@ RUN apt-get -y install r-base \
            libxt-dev \
            libssl-dev \
            libcurl4-openssl-dev
-           
+
 RUN    apt-get -y install gdebi-core
 RUN    wget https://download1.rstudio.org/desktop/jammy/amd64/rstudio-2022.07.1-554-amd64.deb
 RUN    gdebi rstudio-2022.07.1-554-amd64.deb
@@ -28,14 +34,14 @@ RUN    gdebi rstudio-2022.07.1-554-amd64.deb
 RUN     rm *amd64.deb && \
         rm -rf /var/lib/apt/lists/*
 
-RUN apt install libnss3 \
-            libasound2
-            
 #### update system libraries
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get clean
-        
+
+RUN apt -y install libnss3 \
+            libasound2
+
 ## Set up RENV
 
 ENV RENV_VERSION 0.17.3
