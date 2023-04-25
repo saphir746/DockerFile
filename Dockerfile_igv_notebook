@@ -1,0 +1,6 @@
+FROM saphir746/jupyverse:v2
+
+RUN apt-get install --yes python3-pip
+RUN pip install jupyter-book
+
+RUN pip install igv-notebook
