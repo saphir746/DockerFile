@@ -52,6 +52,20 @@ ENV RENV_PATHS_LIBRARY renv/library
 ###
 ## RUN   R -e "install.packages('BiocManager')"
 
+RUN apt-get install -y libfontconfig1-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        libtiff5-dev \
+        libjpeg-dev \
+        cmake \
+        libx11-dev \
+        libxt-dev \
+        libcairo2-dev \
+        r-cran-cairo
+
+
 RUN    apt-get clean \
     && apt-get purge
 
