@@ -68,6 +68,22 @@ RUN apt-get install -y libfontconfig1-dev \
 RUN apt-get install -y libhdf5-dev
 RUN apt-get install -y mariadb-client
 RUN apt-get install -y libmariadb-dev
+RUN apt-get -y install libglpk-dev
+
+## needed for Monocle3
+
+RUN apt-get update
+
+RUN apt-get install -y libudunits2-dev
+RUN apt-get install -y gdal-bin
+RUN apt-get install -y proj-bin
+RUN apt-get install -y libproj-dev
+RUN apt-get install -y libgeos-dev
+RUN apt-get install -y r-cran-rgdal
+RUN apt-get install -y python3-gdal
+
+RUN apt-get install -y libmysqlclient-dev=8.0.36-0ubuntu0.22.04.1
+RUN apt-get install -y libgdal-dev
 
 RUN     chmod 4755 /usr/lib/rstudio/chrome-sandbox
 
